@@ -4,31 +4,31 @@
  */
  /* tslint:disable */
 
-import * as import0 from '@angular/core/src/linker/debug_context';
-import * as import1 from '@angular/platform-browser/src/browser/title';
-import * as import2 from './application.container';
-import * as import3 from '@angular/core/src/render/api';
-import * as import4 from '@angular/core/src/linker/view';
-import * as import5 from '@angular/core/src/linker/element';
-import * as import6 from '@angular/core/src/linker/view_utils';
-import * as import7 from '@angular/core/src/di/injector';
-import * as import8 from '@angular/core/src/linker/view_type';
-import * as import9 from '@angular/core/src/change_detection/change_detection';
-import * as import10 from '../../app.sandbox';
-import * as import11 from '@angular/router/src/router';
-import * as import12 from '@angular/core/src/metadata/view';
-import * as import13 from '@angular/core/src/linker/component_factory';
-import * as import14 from '@angular/core/src/linker/template_ref';
-import * as import15 from '@angular/common/src/directives/ng_if';
-import * as import16 from '@angular/router/src/directives/router_outlet';
-import * as import17 from '../../../common/components/spinner/spinner.component';
-import * as import18 from '@angular/common/src/pipes/async_pipe';
-import * as import19 from '@angular/router/src/router_outlet_map';
-import * as import20 from '@angular/core/src/linker/component_factory_resolver';
-import * as import21 from '../../../common/components/spinner/spinner.component.ngfactory';
-import * as import22 from '../../../common/components/navbar/navbar.component';
-import * as import23 from '../../../common/components/navbar/navbar.component.ngfactory';
-  const nodeDebugInfos_ApplicationContainer_Host0:import0.StaticNodeDebugInfo[] = [new import0.StaticNodeDebugInfo([
+import * as import0 from "@angular/core/src/linker/debug_context";
+import * as import1 from "@angular/platform-browser/src/browser/title";
+import * as import2 from "./application.container";
+import * as import3 from "@angular/core/src/render/api";
+import * as import4 from "@angular/core/src/linker/view";
+import * as import5 from "@angular/core/src/linker/element";
+import * as import6 from "@angular/core/src/linker/view_utils";
+import * as import7 from "@angular/core/src/di/injector";
+import * as import8 from "@angular/core/src/linker/view_type";
+import * as import9 from "@angular/core/src/change_detection/change_detection";
+import * as import10 from "../../app.sandbox";
+import * as import11 from "@angular/router/src/router";
+import * as import12 from "@angular/core/src/metadata/view";
+import * as import13 from "@angular/core/src/linker/component_factory";
+import * as import14 from "@angular/core/src/linker/template_ref";
+import * as import15 from "@angular/common/src/directives/ng_if";
+import * as import16 from "@angular/router/src/directives/router_outlet";
+import * as import17 from "../../../common/components/spinner/spinner.component";
+import * as import18 from "@angular/common/src/pipes/async_pipe";
+import * as import19 from "@angular/router/src/router_outlet_map";
+import * as import20 from "@angular/core/src/linker/component_factory_resolver";
+import * as import21 from "../../../common/components/spinner/spinner.component.ngfactory";
+import * as import22 from "../../../common/components/navbar/navbar.component";
+import * as import23 from "../../../common/components/navbar/navbar.component.ngfactory";
+const nodeDebugInfos_ApplicationContainer_Host0:import0.StaticNodeDebugInfo[] = [new import0.StaticNodeDebugInfo([
     import1.Title,
     import2.ApplicationContainer
   ]
