@@ -13,8 +13,8 @@ import {Subscription} from "rxjs";
                     <h1><i class="fa fa-pencil"></i>&nbsp;Edit wine</h1>
                 </div>
              </div>
-             <div class="row" *ngIf="(editWine$|async)">
-                <detail-wine-form [wine]="editWine$|async" (onSave)="onSave($event)"></detail-wine-form>
+             <div class="row" *ngIf="editWine">
+                <detail-wine-form [wine]="editWine" (onSave)="onSave($event)"></detail-wine-form>
             </div>
         </main>
     </default-page>

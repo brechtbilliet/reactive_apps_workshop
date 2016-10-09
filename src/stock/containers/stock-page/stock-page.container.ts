@@ -3,12 +3,13 @@ import {Wine} from "../../entities/Wine";
 import {FormControl} from "@angular/forms";
 import {StockService} from "../../services/stock.service";
 import {Subscription} from "rxjs";
+import * as orderBy from "lodash/orderBy";
 @Component({
     selector: "stock-page",
     template: `
         <default-page>
             <collapsable-sidebar class="hidden-sm hidden-xs">
-                <favorite-wines (setStock)="onSetStock($event)" [wines]="[]">
+                <favorite-wines (setStock)="onSetStock($event)" [wines]="favoriteWines">
                 </favorite-wines>
             </collapsable-sidebar>
             <main>
@@ -50,25 +51,40 @@ import {Subscription} from "rxjs";
 export class StockPageContainer implements OnDestroy {
     searchCtrl = new FormControl("");
     wines: Array<Wine>;
+    favoriteWines: Array<Wine>;
 
     private subscriptions: Array<Subscription> = [];
 
     constructor(private stockService: StockService) {
-        this.subscriptions.push(this.stockService.fetchAll().subscribe((wines: Array<Wine>) => {
-            this.wines = wines;
-        }));
+       this.loadWines();
     }
 
     onRemove(wine: Wine): void {
+        this.subscriptions.push(this.stockService.remove(wine).subscribe(() => {
+            this.loadWines();
+        }));
     }
 
     onSetRate(item: {wine: Wine, value: number}): void {
+        this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe(() => {
+            this.loadWines();
+        }));
     }
 
     onSetStock(item: {wine: Wine, value: number}): void {
+        this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe(() => {
+            this.loadWines();
+        }));
     }
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
+
+    loadWines(): void{
+        this.subscriptions.push(this.stockService.fetchAll().subscribe((wines: Array<Wine>) => {
+            this.wines = wines;
+            this.favoriteWines = orderBy(this.wines.filter((wine: Wine) => wine.myRating > 3), ["myRating"], ["desc"]).slice(0,5);
+        }));
     }
 }

@@ -12,7 +12,7 @@ import {LOCALSTORAGE_AUTH} from "../../../configuration";
   `
 })
 export class ApplicationContainer implements OnInit {
-    constructor(private title: Title, private authenticationService: AuthenticationService, private router: Router) {
+    constructor(private title: Title, public authenticationService: AuthenticationService, private router: Router) {
         this.title.setTitle("Winecellar application");
     }
 
