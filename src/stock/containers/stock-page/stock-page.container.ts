@@ -2,7 +2,7 @@ import {Component, OnDestroy} from "@angular/core";
 import {Wine} from "../../entities/Wine";
 import {FormControl} from "@angular/forms";
 import {StockService} from "../../services/stock.service";
-import {Subscription} from "rxjs";
+import {Subscription, Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import * as orderBy from "lodash/orderBy";
@@ -40,7 +40,7 @@ import {removeWine, updateRateWine, updateStockWine} from "../../../statemanagem
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <wine-results [wines]="wines"
+                        <wine-results [wines]="matchingWines$|async"
                             (remove)="onRemove($event)" 
                             (setRate)="onSetRate($event)" 
                             (setStock)="onSetStock($event)">
@@ -53,15 +53,19 @@ import {removeWine, updateRateWine, updateStockWine} from "../../../statemanagem
 })
 export class StockPageContainer implements OnDestroy {
     searchCtrl = new FormControl("");
-    wines: Array<Wine>;
+    term$ = this.searchCtrl.valueChanges.startWith("");
+    wines$ = this.store.select(state => state.data.wines);
+    matchingWines$ = Observable.combineLatest(this.term$, this.wines$,
+        (term: string, wines: Array<Wine>) => {
+            return wines.filter(wine => wine.name.toLowerCase().indexOf(term) > -1);
+        });
     favoriteWines: Array<Wine>;
 
     private subscriptions: Array<Subscription> = [];
 
     constructor(private stockService: StockService, private store: Store<ApplicationState>) {
         this.subscriptions.push(this.store.subscribe((state: ApplicationState) => {
-            this.wines = state.data.wines;
-            this.favoriteWines = orderBy(this.wines.filter((wine: Wine) => wine.myRating > 3), ["myRating"], ["desc"]).slice(0, 5);
+            this.favoriteWines = orderBy(state.data.wines.filter((wine: Wine) => wine.myRating > 3), ["myRating"], ["desc"]).slice(0, 5);
         }));
     }
 
