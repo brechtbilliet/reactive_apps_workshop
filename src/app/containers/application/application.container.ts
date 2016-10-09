@@ -5,9 +5,11 @@ import {AuthenticationService} from "../../../authentication/services/authentica
 import {LOCALSTORAGE_AUTH} from "../../../configuration";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import {Store} from "@ngrx/store";
-import {setAuthentication, clearAuthentication} from "../../../statemanagement/actionCreators";
+import {setAuthentication, clearAuthentication, addAllWines} from "../../../statemanagement/actionCreators";
 import {Account} from "../../../authentication/types/Account";
 import {Subscription} from "rxjs";
+import {StockService} from "../../../stock/services/stock.service";
+import {Wine} from "../../../stock/entities/Wine";
 @Component({
     selector: "application",
     providers: [Title],
@@ -23,7 +25,7 @@ export class ApplicationContainer implements OnInit, OnDestroy {
     private subscriptions: Array<Subscription> = [];
 
     constructor(private title: Title, public authenticationService: AuthenticationService,
-                private router: Router, private store: Store<ApplicationState>) {
+                private router: Router, private store: Store<ApplicationState>, private stockService: StockService) {
         this.title.setTitle("Winecellar application");
     }
 
@@ -37,6 +39,11 @@ export class ApplicationContainer implements OnInit, OnDestroy {
             });
         }
         this.subscriptions.push(this.store.subscribe((state: ApplicationState) => {
+            if (!this.isAuthenticated && state.data.authentication.isAuthenticated) {
+                this.subscriptions.push(this.stockService.fetchAll().subscribe((wines: Array<Wine>) => {
+                    this.store.dispatch(addAllWines(wines));
+                }));
+            }
             this.isAuthenticated = state.data.authentication.isAuthenticated;
             this.account = state.data.authentication.account;
         }));

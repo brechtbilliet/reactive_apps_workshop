@@ -3,6 +3,8 @@ import {Wine} from "../../entities/Wine";
 import {FormControl} from "@angular/forms";
 import {StockService} from "../../services/stock.service";
 import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import * as orderBy from "lodash/orderBy";
 @Component({
     selector: "stock-page",
@@ -55,36 +57,32 @@ export class StockPageContainer implements OnDestroy {
 
     private subscriptions: Array<Subscription> = [];
 
-    constructor(private stockService: StockService) {
-       this.loadWines();
+    constructor(private stockService: StockService, private store: Store<ApplicationState>) {
+        this.subscriptions.push(this.store.subscribe((state: ApplicationState) => {
+            this.wines = state.data.wines;
+            this.favoriteWines = orderBy(this.wines.filter((wine: Wine) => wine.myRating > 3), ["myRating"], ["desc"]).slice(0, 5);
+        }));
     }
 
     onRemove(wine: Wine): void {
         this.subscriptions.push(this.stockService.remove(wine).subscribe(() => {
-            this.loadWines();
+            // todo notify the store
         }));
     }
 
     onSetRate(item: {wine: Wine, value: number}): void {
         this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe(() => {
-            this.loadWines();
+            // todo notify the store
         }));
     }
 
     onSetStock(item: {wine: Wine, value: number}): void {
         this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe(() => {
-            this.loadWines();
+            // todo notify the store
         }));
     }
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(sub => sub.unsubscribe());
-    }
-
-    loadWines(): void{
-        this.subscriptions.push(this.stockService.fetchAll().subscribe((wines: Array<Wine>) => {
-            this.wines = wines;
-            this.favoriteWines = orderBy(this.wines.filter((wine: Wine) => wine.myRating > 3), ["myRating"], ["desc"]).slice(0,5);
-        }));
     }
 }
