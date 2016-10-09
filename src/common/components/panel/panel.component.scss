@@ -1,0 +1,9 @@
+panel .panel-primary {
+  border: none;
+  .panel-heading {
+    background-color: $color-purple;
+    border-color: $color-purple-dark;
+  }
+  max-width: 500px;
+  margin: 0 auto;
+}

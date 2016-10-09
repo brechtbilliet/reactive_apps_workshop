@@ -1,0 +1,17 @@
+number-picker {
+  min-width: 78px;
+  display: flex;
+  flex-direction: row;
+  .btn-primary {
+    background-color: $color-purple-light;
+    border: none;
+    &:hover {
+      background-color: $color-purple;
+    }
+  }
+  .amount {
+    width: 30px;
+    display: block;
+    text-align: center;
+  }
+}
