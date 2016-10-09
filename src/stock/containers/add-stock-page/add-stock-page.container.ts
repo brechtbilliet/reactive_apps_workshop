@@ -3,6 +3,9 @@ import {Router} from "@angular/router";
 import {Wine} from "../../entities/Wine";
 import {StockService} from "../../services/stock.service";
 import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
+import {addWine} from "../../../statemanagement/actionCreators";
 @Component({
     selector: "add-stock-page",
     template: `
@@ -22,11 +25,12 @@ import {Subscription} from "rxjs";
 })
 export class AddStockPageContainer implements OnDestroy {
     private subscriptions: Array<Subscription> = [];
-    constructor(private stockService: StockService, private router: Router) {
+    constructor(private stockService: StockService, private router: Router, private store: Store<ApplicationState>) {
     }
 
     onSave(wine: Wine): void {
-        this.subscriptions.push(this.stockService.add(wine).subscribe(() => {
+        this.subscriptions.push(this.stockService.add(wine).subscribe((createdWine: Wine) => {
+            this.store.dispatch(addWine(createdWine));
             this.router.navigate(["/stock"]);
         }));
     }

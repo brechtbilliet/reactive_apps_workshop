@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import * as orderBy from "lodash/orderBy";
+import {removeWine, updateRateWine, updateStockWine} from "../../../statemanagement/actionCreators";
 @Component({
     selector: "stock-page",
     template: `
@@ -66,19 +67,19 @@ export class StockPageContainer implements OnDestroy {
 
     onRemove(wine: Wine): void {
         this.subscriptions.push(this.stockService.remove(wine).subscribe(() => {
-            // todo notify the store
+            this.store.dispatch(removeWine(wine._id));
         }));
     }
 
     onSetRate(item: {wine: Wine, value: number}): void {
         this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe(() => {
-            // todo notify the store
+            this.store.dispatch(updateRateWine(item.wine._id, item.value));
         }));
     }
 
     onSetStock(item: {wine: Wine, value: number}): void {
         this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe(() => {
-            // todo notify the store
+            this.store.dispatch(updateStockWine(item.wine._id, item.value));
         }));
     }
 

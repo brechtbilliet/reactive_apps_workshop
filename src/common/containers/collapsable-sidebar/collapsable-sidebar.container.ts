@@ -1,4 +1,8 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {Component, ViewEncapsulation, OnDestroy} from "@angular/core";
+import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
+import {toggleSidebar} from "../../../statemanagement/actionCreators";
 @Component({
     selector: "collapsable-sidebar",
     encapsulation: ViewEncapsulation.None,
@@ -12,10 +16,22 @@ import {Component, ViewEncapsulation} from "@angular/core";
         </div>
     `
 })
-export class CollapsableSidebarContainer {
+export class CollapsableSidebarContainer implements OnDestroy {
     isCollapsed = false;
 
+    private subscriptions: Array<Subscription> = [];
+
+    constructor(private store: Store<ApplicationState>) {
+        this.subscriptions.push(this.store.subscribe((state: ApplicationState) => {
+            this.isCollapsed = state.containers.collapsableSidebar.isCollapsed;
+        }));
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
+
     toggle(): void {
-        this.isCollapsed = !this.isCollapsed;
+        this.store.dispatch(toggleSidebar());
     }
 }
