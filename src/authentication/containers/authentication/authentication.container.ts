@@ -6,6 +6,9 @@ import {Subscription} from "rxjs/Subscription";
 import {AuthenticationService} from "../../services/authentication.service";
 import {LOCALSTORAGE_AUTH} from "../../../configuration";
 import {AuthenticationResult} from "../../types/AuthenticationResult";
+import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
+import {Store} from "@ngrx/store";
+import {setAuthentication} from "../../../statemanagement/actionCreators";
 @Component({
     selector: "authentication",
     template: `
@@ -24,7 +27,7 @@ export class AuthenticationContainer implements OnDestroy {
     isBusy = false;
     subscriptions: Array<Subscription> = [];
 
-    constructor(private authenticationService: AuthenticationService, private router: Router) {
+    constructor(private store: Store<ApplicationState>, private authenticationService: AuthenticationService, private router: Router) {
     }
 
     enableTab(tabIndex: number): void {
@@ -36,6 +39,7 @@ export class AuthenticationContainer implements OnDestroy {
         this.subscriptions.push(this.authenticationService.authenticate(credentials).subscribe((authenticationResult: AuthenticationResult) => {
             window.localStorage.setItem(LOCALSTORAGE_AUTH, JSON.stringify(authenticationResult));
             this.isBusy = true;
+            this.store.dispatch(setAuthentication(authenticationResult));
             this.router.navigate(["/"]);
         }));
     }
@@ -45,6 +49,7 @@ export class AuthenticationContainer implements OnDestroy {
         this.subscriptions.push(this.authenticationService.register(account).subscribe((authenticationResult: AuthenticationResult) => {
             window.localStorage.setItem(LOCALSTORAGE_AUTH, JSON.stringify(authenticationResult));
             this.isBusy = true;
+            this.store.dispatch(setAuthentication(authenticationResult));
             this.router.navigate(["/"]);
         }));
     }

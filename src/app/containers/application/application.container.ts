@@ -3,16 +3,23 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../authentication/services/authentication.service";
 import {LOCALSTORAGE_AUTH} from "../../../configuration";
+import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
+import {Store} from "@ngrx/store";
+import {setAuthentication, clearAuthentication} from "../../../statemanagement/actionCreators";
+import {Account} from "../../../authentication/types/Account";
 @Component({
     selector: "application",
     providers: [Title],
     template: `
-        <navbar [account]="authenticationService.account" (logout)="logout()" *ngIf="authenticationService.isAuthenticated"></navbar>
+        <navbar [account]="account" (logout)="logout()" *ngIf="isAuthenticated"></navbar>
         <router-outlet></router-outlet>
   `
 })
 export class ApplicationContainer implements OnInit {
-    constructor(private title: Title, public authenticationService: AuthenticationService, private router: Router) {
+    isAuthenticated: boolean;
+    account: Account;
+    constructor(private title: Title, public authenticationService: AuthenticationService,
+                private router: Router, private store: Store<ApplicationState>) {
         this.title.setTitle("Winecellar application");
     }
 
@@ -22,20 +29,18 @@ export class ApplicationContainer implements OnInit {
             // evil fix for bug in @ngrx/dev-tools
             // https://github.com/ngrx/store-devtools/issues/25
             setTimeout(() => {
-                this.authenticationService.isAuthenticated = true;
-                this.authenticationService.account = {
-                    firstName: obj.firstName,
-                    lastName: obj.lastName,
-                    login: obj.login,
-                };
+                this.store.dispatch(setAuthentication(obj));
             });
         }
+        this.store.subscribe((state: ApplicationState) => {
+            this.isAuthenticated = state.data.authentication.isAuthenticated;
+            this.account = state.data.authentication.account;
+        })
     }
 
     logout(): void {
         localStorage.removeItem(LOCALSTORAGE_AUTH);
-        this.authenticationService.isAuthenticated = false;
-        this.authenticationService.account = null;
+        this.store.dispatch(clearAuthentication());
         this.router.navigate(["/authentication"]);
     }
 }
