@@ -67,18 +67,21 @@ export class StockPageContainer implements OnDestroy {
     onRemove(wine: Wine): void {
         this.subscriptions.push(this.stockService.remove(wine).subscribe(() => {
             // todo notify the store
+            // hint: this.store.dispatch...
         }));
     }
 
     onSetRate(item: {wine: Wine, value: number}): void {
         this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe(() => {
             // todo notify the store
+            // hint: this.store.dispatch...
         }));
     }
 
     onSetStock(item: {wine: Wine, value: number}): void {
         this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe(() => {
             // todo notify the store
+            // hint: this.store.dispatch...
         }));
     }
 
