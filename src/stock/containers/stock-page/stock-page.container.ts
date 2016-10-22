@@ -70,27 +70,21 @@ export class StockPageContainer implements OnDestroy {
     private subscriptions: Array<Subscription> = [];
 
     constructor(private stockService: StockService, private store: Store<ApplicationState>) {
-        this.subscriptions.push(this.store.subscribe((state: ApplicationState) => {
-            this.favoriteWines = orderBy(state.data.wines.filter((wine: Wine) => wine.myRating > 3), ["myRating"], ["desc"]).slice(0, 5);
-        }));
     }
 
     onRemove(wine: Wine): void {
-        this.subscriptions.push(this.stockService.remove(wine).subscribe(() => {
-            this.store.dispatch(removeWine(wine._id));
-        }));
+        this.store.dispatch(removeWine(wine._id));
+        this.subscriptions.push(this.stockService.remove(wine).subscribe());
     }
 
     onSetRate(item: {wine: Wine, value: number}): void {
-        this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe(() => {
-            this.store.dispatch(updateRateWine(item.wine._id, item.value));
-        }));
+        this.store.dispatch(updateRateWine(item.wine._id, item.value));
+        this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe());
     }
 
     onSetStock(item: {wine: Wine, value: number}): void {
-        this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe(() => {
-            this.store.dispatch(updateStockWine(item.wine._id, item.value));
-        }));
+        this.store.dispatch(updateStockWine(item.wine._id, item.value));
+        this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe());
     }
 
     ngOnDestroy(): void {
