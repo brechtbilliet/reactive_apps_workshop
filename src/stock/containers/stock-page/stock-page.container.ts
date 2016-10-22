@@ -33,8 +33,8 @@ import {removeWine, updateRateWine, updateStockWine} from "../../../statemanagem
                     <div class="col-sm-12">
                         <h2>
                             <i class="fa fa-user"></i>&nbsp;My wines
-                            <span class="badge badge-primary">todo</span>
-                            <span class="badge badge-primary">todo euro</span>
+                            <span class="badge badge-primary">todo (number of wines)</span>
+                            <span class="badge badge-primary">todo (price of cellar)euro</span>
                         </h2>
                     </div>
                 </div>
