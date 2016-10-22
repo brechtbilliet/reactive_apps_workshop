@@ -6,5 +6,7 @@ let initialState: {isCollapsed: boolean} = {
 
 export function collapsableSidebarReducer(state: {isCollapsed: boolean} = initialState,
                                           action: Action): {isCollapsed: boolean} {
-    return null;
+    //TODO: implement the following action types:
+    // - CONTAINER_COLLAPSABLESIDEBAR_TOGGLE -> should flip the current value
+    // - don't forget the default state!
 };
