@@ -8,6 +8,9 @@ import {ApplicationState} from "../../../statemanagement/state/ApplicationState"
 import * as orderBy from "lodash/orderBy";
 import * as sumBy from "lodash/sumBy";
 import {removeWine, updateRateWine, updateStockWine} from "../../../statemanagement/actionCreators";
+import {UNDO_ACTION} from "ngrx-undo";
+import * as toastr from "toastr";
+
 @Component({
     selector: "stock-page",
     template: `
@@ -59,8 +62,7 @@ export class StockPageContainer implements OnDestroy {
     numberOfWines$ = this.wines$.map(wines => sumBy(wines, (wine: Wine) => wine.inStock));
     worth$ = this.wines$.map(wines => sumBy(wines, (wine: Wine) => wine.price * wine.inStock).toFixed(2));
     favoriteWines$ = this.wines$.map((wines: Wine[]) => wines.filter((wine: Wine) => wine.myRating > 3))
-        .map(wines => orderBy(wines, ["myRating"], ["desc"]).slice(0,5));
-
+        .map(wines => orderBy(wines, ["myRating"], ["desc"]).slice(0, 5));
     matchingWines$ = Observable.combineLatest(this.term$, this.wines$,
         (term: string, wines: Array<Wine>) => {
             return wines.filter(wine => wine.name.toLowerCase().indexOf(term) > -1);
@@ -73,18 +75,33 @@ export class StockPageContainer implements OnDestroy {
     }
 
     onRemove(wine: Wine): void {
-        this.store.dispatch(removeWine(wine._id));
-        this.subscriptions.push(this.stockService.remove(wine).subscribe());
+        let action = removeWine(wine._id);
+        this.store.dispatch(action);
+        this.subscriptions.push(this.stockService.remove(wine).subscribe(() => {
+        }, () => {
+            this.store.dispatch({type: UNDO_ACTION, payload: action});
+            toastr.error("There was an error in the backend, syncing ui...");
+        }));
     }
 
     onSetRate(item: {wine: Wine, value: number}): void {
-        this.store.dispatch(updateRateWine(item.wine._id, item.value));
-        this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe());
+        let action = updateRateWine(item.wine._id, item.value);
+        this.store.dispatch(action);
+        this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe(() => {
+        }, () => {
+            this.store.dispatch({type: UNDO_ACTION, payload: action});
+            toastr.error("There was an error in the backend, syncing ui...");
+        }));
     }
 
     onSetStock(item: {wine: Wine, value: number}): void {
-        this.store.dispatch(updateStockWine(item.wine._id, item.value));
-        this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe());
+        let action = updateStockWine(item.wine._id, item.value);
+        this.store.dispatch(action);
+        this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe(() => {
+        }, () => {
+            this.store.dispatch({type: UNDO_ACTION, payload: action});
+            toastr.error("There was an error in the backend, syncing ui...");
+        }));
     }
 
     ngOnDestroy(): void {

@@ -4,6 +4,7 @@ import {StoreModule} from "@ngrx/store";
 import {rootReducer} from "../statemanagement/rootReducer";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {StoreLogMonitorModule, useLogMonitor} from "@ngrx/store-log-monitor";
+import {StoreUndoModule} from "ngrx-undo/index";
 @Component({
     selector: "application-wrapper",
     template: `   
@@ -21,6 +22,8 @@ export class ApplicationWrapperContainer {
                 visible: false,
                 position: "right"
             })
+        }), StoreUndoModule.interceptStore({
+            bufferSize: 200 // Set the size of the buffer (Default: 100)
         }), StoreLogMonitorModule, AppModule],
     declarations: [ApplicationWrapperContainer],
     bootstrap: [ApplicationWrapperContainer]
