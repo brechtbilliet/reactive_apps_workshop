@@ -8,7 +8,7 @@ import {StoreLogMonitorModule, useLogMonitor} from "@ngrx/store-log-monitor";
     selector: "application-wrapper",
     template: `   
         <application></application>
-        <ngrx-store-log-monitor toggleCommand="ctrl-t" positionCommand="ctrl-m"></ngrx-store-log-monitor>
+        <ngrx-store-log-monitor toggleCommand="ctrl-l" positionCommand="ctrl-m"></ngrx-store-log-monitor>
 `
 })
 export class ApplicationWrapperContainer {
