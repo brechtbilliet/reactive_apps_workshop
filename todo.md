@@ -1,11 +1,15 @@
 ## First excercise
 
-implement the reducers in src/statemanagement/reducers
+Implement the reducers in 'src/statemanagement/reducers'
 
-There are 4 of them: appliation.reducer.ts, collapsable-sidebar.reducer.ts, wines.reducer.ts and authentication.reducer.ts
+There are 4 reducers to complete: 
+- appliation.reducer.ts
+- collapsable-sidebar.reducer.ts
+- wines.reducer.ts
+- authentication.reducer.ts
 
-You will see that the tests are already implemented
-With the use of wallaby.js it should be very easy to implement.
+You will see that the tests are already implemented.
+With the use of wallaby.js you will constantly get feedback which should make it easier for you!
 
 **Remember**:
 Reducers should be immutable
