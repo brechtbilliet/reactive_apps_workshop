@@ -8,12 +8,13 @@ import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {CommonLogicModule} from "../common/index";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AuthenticationSandbox} from "./authentication.sandbox";
 
 @NgModule({
     imports: [FormsModule, ReactiveFormsModule, RouterModule, CommonModule, HttpModule, CommonLogicModule],
     declarations: [AuthenticationContainer, LoginComponent, RegisterComponent],
     exports: [AuthenticationContainer],
-    providers: [AuthenticationService]
+    providers: [AuthenticationService, AuthenticationSandbox]
 })
 export class AuthenticationModule {
 }

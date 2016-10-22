@@ -6,11 +6,12 @@ import {CommonLogicModule} from "../common";
 import {StockModule} from "../stock";
 import {AuthenticationModule} from "../authentication";
 import {AboutModule} from "../about";
+import {AppSandbox} from "./app.sandbox";
 
 @NgModule({
     imports: [BrowserModule, AboutModule, AuthenticationModule, CommonLogicModule, StockModule, routing],
     declarations: [ApplicationContainer],
-    exports: [ApplicationContainer]
+    exports: [ApplicationContainer, AppSandbox]
 })
 export class AppModule {
 }

@@ -18,6 +18,7 @@ import {CommonModule} from "@angular/common";
 import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {AuthenticatedGuard} from "./authenticated.guard";
 import {RealTime} from "./realtime";
+import {CommonSandbox} from "./common.sandbox";
 
 @NgModule({
     imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterModule, HttpModule],
@@ -25,7 +26,7 @@ import {RealTime} from "./realtime";
         MainComponent, NavbarComponent, NumberPickerComponent, PanelComponent, Rating, SpinnerComponent, CollapsableSidebarContainer],
     exports: [DefaultPageComponent, FormGroupContent, FormGroupFooter, FormGroupPassword, FormGroupTextarea, FormGroupTextbox,
         MainComponent, NavbarComponent, NumberPickerComponent, PanelComponent, Rating, SpinnerComponent, CollapsableSidebarContainer],
-    providers: [AuthenticatedGuard, RealTime]
+    providers: [AuthenticatedGuard, RealTime, CommonSandbox]
 })
 export class CommonLogicModule {
 }
