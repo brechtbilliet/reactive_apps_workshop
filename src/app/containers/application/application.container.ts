@@ -10,6 +10,7 @@ import {Account} from "../../../authentication/types/Account";
 import {Subscription} from "rxjs";
 import {StockService} from "../../../stock/services/stock.service";
 import {Wine} from "../../../stock/entities/Wine";
+import {RealTime} from "../../../common/realtime";
 @Component({
     selector: "application",
     providers: [Title],
@@ -24,7 +25,7 @@ export class ApplicationContainer implements OnInit, OnDestroy {
 
     private subscriptions: Array<Subscription> = [];
 
-    constructor(private title: Title, public authenticationService: AuthenticationService,
+    constructor(private title: Title, public authenticationService: AuthenticationService, private realtime: RealTime,
                 private router: Router, private store: Store<ApplicationState>, private stockService: StockService) {
         this.title.setTitle("Winecellar application");
     }
@@ -40,6 +41,7 @@ export class ApplicationContainer implements OnInit, OnDestroy {
         }
         this.subscriptions.push(this.store.subscribe((state: ApplicationState) => {
             if (!this.isAuthenticated && state.data.authentication.isAuthenticated) {
+                this.realtime.connect();
                 this.subscriptions.push(this.stockService.fetchAll().subscribe((wines: Array<Wine>) => {
                     this.store.dispatch(addAllWines(wines));
                 }));
@@ -53,6 +55,7 @@ export class ApplicationContainer implements OnInit, OnDestroy {
         localStorage.removeItem(LOCALSTORAGE_AUTH);
         this.store.dispatch(clearAuthentication());
         this.router.navigate(["/authentication"]);
+        this.realtime.disconnect();
     }
 
     ngOnDestroy(): void {
