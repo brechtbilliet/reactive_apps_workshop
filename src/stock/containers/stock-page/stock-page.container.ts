@@ -1,15 +1,10 @@
-import {Component, OnDestroy} from "@angular/core";
+import {Component} from "@angular/core";
 import {Wine} from "../../entities/Wine";
 import {FormControl} from "@angular/forms";
-import {StockService} from "../../services/stock.service";
-import {Subscription, Observable} from "rxjs";
-import {Store} from "@ngrx/store";
-import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
+import {Observable} from "rxjs";
 import * as orderBy from "lodash/orderBy";
 import * as sumBy from "lodash/sumBy";
-import {removeWine, updateRateWine, updateStockWine} from "../../../statemanagement/actionCreators";
-import {UNDO_ACTION} from "ngrx-undo";
-import * as toastr from "toastr";
+import {StockSandbox} from "../../stock.sandbox";
 
 @Component({
     selector: "stock-page",
@@ -55,10 +50,10 @@ import * as toastr from "toastr";
         </default-page>
      `
 })
-export class StockPageContainer implements OnDestroy {
+export class StockPageContainer {
     searchCtrl = new FormControl("");
     term$ = this.searchCtrl.valueChanges.startWith("");
-    wines$ = this.store.select(state => state.data.wines);
+    wines$ = this.sb.wines$;
     numberOfWines$ = this.wines$.map(wines => sumBy(wines, (wine: Wine) => wine.inStock));
     worth$ = this.wines$.map(wines => sumBy(wines, (wine: Wine) => wine.price * wine.inStock).toFixed(2));
     favoriteWines$ = this.wines$.map((wines: Wine[]) => wines.filter((wine: Wine) => wine.myRating > 3))
@@ -69,42 +64,18 @@ export class StockPageContainer implements OnDestroy {
         });
     favoriteWines: Array<Wine>;
 
-    private subscriptions: Array<Subscription> = [];
-
-    constructor(private stockService: StockService, private store: Store<ApplicationState>) {
+    constructor(private sb: StockSandbox) {
     }
 
     onRemove(wine: Wine): void {
-        let action = removeWine(wine._id);
-        this.store.dispatch(action);
-        this.subscriptions.push(this.stockService.remove(wine).subscribe(() => {
-        }, () => {
-            this.store.dispatch({type: UNDO_ACTION, payload: action});
-            toastr.error("There was an error in the backend, syncing ui...");
-        }));
+        this.sb.removeWine(wine);
     }
 
     onSetRate(item: {wine: Wine, value: number}): void {
-        let action = updateRateWine(item.wine._id, item.value);
-        this.store.dispatch(action);
-        this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe(() => {
-        }, () => {
-            this.store.dispatch({type: UNDO_ACTION, payload: action});
-            toastr.error("There was an error in the backend, syncing ui...");
-        }));
+        this.sb.setRate(item.wine, item.value);
     }
 
     onSetStock(item: {wine: Wine, value: number}): void {
-        let action = updateStockWine(item.wine._id, item.value);
-        this.store.dispatch(action);
-        this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe(() => {
-        }, () => {
-            this.store.dispatch({type: UNDO_ACTION, payload: action});
-            toastr.error("There was an error in the backend, syncing ui...");
-        }));
-    }
-
-    ngOnDestroy(): void {
-        this.subscriptions.forEach(sub => sub.unsubscribe());
+        this.sb.setStock(item.wine, item.value);
     }
 }

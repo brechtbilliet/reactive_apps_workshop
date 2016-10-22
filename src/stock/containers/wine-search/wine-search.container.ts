@@ -1,8 +1,9 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, OnInit} from "@angular/core";
 import {Subscription} from "rxjs/Subscription";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {Product, WineComSearchResult, WineComService} from "../../services/wineCom.service";
+import {Product, WineComSearchResult} from "../../services/wineCom.service";
 import {FormControl} from "@angular/forms";
+import {StockSandbox} from "../../stock.sandbox";
 
 @Component({
     selector: "wine-search",
@@ -34,7 +35,7 @@ export class WineSearchContainer implements OnDestroy, OnInit {
     private foundWineName: string;
     private subscriptions: Array<Subscription> = [];
 
-    constructor(private wineComService: WineComService) {
+    constructor(private sb: StockSandbox) {
     }
 
     onSelectWine(wine: Product): void {
@@ -57,7 +58,7 @@ export class WineSearchContainer implements OnDestroy, OnInit {
             .debounceTime(300)
             .distinctUntilChanged()
             .filter(value => value.length > 2 && value !== this.foundWineName)
-            .switchMap(value => this.wineComService.search(value))
+            .switchMap(value => this.sb.search(value))
             .map((res: WineComSearchResult) => res.products.list)
             .subscribe((wines: Array<Product>) => {
                 this.winesToShow$.next(wines);

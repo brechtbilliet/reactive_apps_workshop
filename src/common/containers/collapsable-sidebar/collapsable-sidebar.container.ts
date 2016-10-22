@@ -1,8 +1,4 @@
-import {Component, ViewEncapsulation, OnDestroy} from "@angular/core";
-import {Subscription} from "rxjs";
-import {Store} from "@ngrx/store";
-import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
-import {toggleSidebar} from "../../../statemanagement/actionCreators";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {CommonSandbox} from "../../common.sandbox";
 @Component({
     selector: "collapsable-sidebar",

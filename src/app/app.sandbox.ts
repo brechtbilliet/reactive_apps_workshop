@@ -37,7 +37,7 @@ export class AppSandbox {
 
 
     loadWines(): void {
-        this.stockService.load().subscribe((wines: Array<Wine>) => {
+        this.stockService.fetchAll().subscribe((wines: Array<Wine>) => {
             this.store.dispatch(addAllWines(wines));
         });
     }
