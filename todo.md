@@ -9,5 +9,22 @@ You can create a stream of how many wines there are and render it in the view (l
 
 You can create a stream of how much money your winecellar is worth and render it in the view (look for todo).
 
-## Bonus excercise
+
 Refactor the collapsable sidebar in src/common/containers/collapsable-sidebar/collapsable-sidebar.container.ts to use streams and make sure you don't have any subscribes anymore.
+
+## Bonus excercise
+Busy handling: We have created a customhttp service in app/customHttp.ts When a GET request or POST request happens we want to notify the store that the busy flag should be shown. The actions are:
+<ul>
+<li>CONTAINER_APPLICATION_ENABLE_BUSY_FLAG</li>
+<li>CONTAINER_APPLICATION_DISABLE_BUSY_FLAG</li>
+</ul>
+
+Like before, use the actioncreators:
+<ul>
+<li>enableBusy()</li>
+<li>disableBusy()</li>
+</ul>
+
+Then go over to src/app/containers/application/application.container.ts and make sure the spinner component gets the right value out of the store.
+
+The busy flag should be shown when fetching data and adding data (We will explain later why there is only a spinner for POST and GET)

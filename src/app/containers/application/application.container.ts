@@ -16,11 +16,13 @@ import {Wine} from "../../../stock/entities/Wine";
     template: `
         <navbar [account]="account" (logout)="logout()" *ngIf="isAuthenticated"></navbar>
         <router-outlet></router-outlet>
+        <spinner [spin]="false"></spinner>
   `
 })
 export class ApplicationContainer implements OnInit, OnDestroy {
     isAuthenticated: boolean;
     account: Account;
+    // todo fetch the isbusy flag from the store
 
     private subscriptions: Array<Subscription> = [];
 
