@@ -6,7 +6,6 @@ import {LOCALSTORAGE_AUTH} from "../../../configuration";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import {Store} from "@ngrx/store";
 import {setAuthentication, clearAuthentication, addAllWines} from "../../../statemanagement/actionCreators";
-import {Account} from "../../../authentication/types/Account";
 import {Subscription} from "rxjs";
 import {StockService} from "../../../stock/services/stock.service";
 import {Wine} from "../../../stock/entities/Wine";
@@ -15,13 +14,15 @@ import {RealTime} from "../../../common/realtime";
     selector: "application",
     providers: [Title],
     template: `
-        <navbar [account]="account" (logout)="logout()" *ngIf="isAuthenticated"></navbar>
+        <navbar [account]="account$|async" (logout)="logout()" *ngIf="isAuthenticated$|async"></navbar>
         <router-outlet></router-outlet>
-  `
+        <spinner [spin]="isBusy$|async"></spinner>
+ `
 })
 export class ApplicationContainer implements OnInit, OnDestroy {
-    isAuthenticated: boolean;
-    account: Account;
+    isBusy$ = this.store.select(state => state.containers.application.isBusy);
+    isAuthenticated$ = this.store.select(state => state.data.authentication.isAuthenticated);
+    account$ = this.store.select(state => state.data.authentication.account);
 
     private subscriptions: Array<Subscription> = [];
 
@@ -39,15 +40,13 @@ export class ApplicationContainer implements OnInit, OnDestroy {
                 this.store.dispatch(setAuthentication(obj));
             });
         }
-        this.subscriptions.push(this.store.subscribe((state: ApplicationState) => {
-            if (!this.isAuthenticated && state.data.authentication.isAuthenticated) {
+        this.subscriptions.push(this.isAuthenticated$.subscribe((isAuthenticated: boolean) => {
+            if (isAuthenticated) {
                 this.realtime.connect();
                 this.subscriptions.push(this.stockService.fetchAll().subscribe((wines: Array<Wine>) => {
                     this.store.dispatch(addAllWines(wines));
                 }));
             }
-            this.isAuthenticated = state.data.authentication.isAuthenticated;
-            this.account = state.data.authentication.account;
         }));
     }
 
