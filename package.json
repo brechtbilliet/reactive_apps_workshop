@@ -4,7 +4,7 @@
   "description": "Winecellar application from http://workshop.brecht.io",
   "main": "index.js",
   "scripts": {
-    "ngc": "ngc -p ./tsconfig.aot.json",
+    "ngc": "ngc -p tsconfig.aot.json",
     "test": "npm run ngc && karma start karma.conf.js",
     "start": "npm run ngc && webpack-dev-server --config webpack/webpack.dev.js --inline --hot",
     "clean-dist": "rimraf dist",
