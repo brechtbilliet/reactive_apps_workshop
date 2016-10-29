@@ -4,11 +4,11 @@
   "description": "Winecellar application from http://workshop.brecht.io",
   "main": "index.js",
   "scripts": {
-    "ngc": "./node_modules/.bin/ngc -p ./tsconfig.aot.json",
-    "test": "npm run ngc && ./node_modules/.bin/karma start karma.conf.js",
-    "start": "npm run ngc && ./node_modules/.bin/webpack-dev-server --config webpack/webpack.dev.js --inline --hot",
-    "clean-dist": "./node_modules/.bin/rimraf dist",
-    "build-prod": "npm run clean-dist && ./node_modules/.bin/webpack --config webpack/webpack.build.js",
+    "ngc": "ngc -p ./tsconfig.aot.json",
+    "test": "npm run ngc && karma start karma.conf.js",
+    "start": "npm run ngc && webpack-dev-server --config webpack/webpack.dev.js --inline --hot",
+    "clean-dist": "rimraf dist",
+    "build-prod": "npm run clean-dist && webpack --config webpack/webpack.build.js",
     "create-200": "cp dist/index.html dist/200.html",
     "build": "npm run ngc && npm run build-prod && npm run create-200",
     "deploy": "npm run build && surge --project dist --domain winecellar-bad.surge.sh"
