@@ -11,3 +11,4 @@ out_aot
 *.ngfactory.ts
 out_es2015
 out_treeshaked
+.vscode
