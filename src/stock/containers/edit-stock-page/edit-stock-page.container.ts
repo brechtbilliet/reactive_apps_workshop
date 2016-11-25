@@ -1,8 +1,8 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
 import {Wine} from "../../entities/Wine";
 import {ActivatedRoute, Router} from "@angular/router";
-import {StockService} from "../../services/stock.service";
 import {Subscription} from "rxjs";
+import {StockSandbox} from "../../stock.sandbox";
 @Component({
     selector: "edit-stock-page",
     template: `
@@ -25,24 +25,22 @@ export class EditStockPageContainer implements OnDestroy, OnInit {
     editWine: Wine;
     private subscriptions: Array<Subscription> = [];
 
-    constructor(public stockService: StockService,
+    constructor(public sb: StockSandbox,
                 private route: ActivatedRoute,
                 private router: Router) {
     }
 
     onSave(wine: Wine): void {
-        this.subscriptions.push(this.stockService.update(this.id, wine).subscribe(() => {
-            this.router.navigate(["/stock"]);
-        }));
+        this.sb.updateWine(this.id, wine);
+        this.router.navigate(["/stock"]);
     }
-
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 
     ngOnInit(): void {
-        this.subscriptions.push(this.stockService.fetchWine(this.id).subscribe((wine: Wine) => {
+        this.subscriptions.push(this.sb.fetchWine(this.id).subscribe((wine: Wine) => {
             this.editWine = wine;
         }));
     }
