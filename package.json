@@ -4,14 +4,14 @@
   "description": "Winecellar application from http://workshop.brecht.io",
   "main": "index.js",
   "scripts": {
-    "ngc": "ngc -p tsconfig.aot.json",
+    "ngc": "ngc -p ./tsconfig.aot.json",
     "test": "npm run ngc && karma start karma.conf.js",
     "start": "npm run ngc && webpack-dev-server --config webpack/webpack.dev.js --inline --hot",
     "clean-dist": "rimraf dist",
     "build-prod": "npm run clean-dist && webpack --config webpack/webpack.build.js",
     "create-200": "cp dist/index.html dist/200.html",
     "build": "npm run ngc && npm run build-prod && npm run create-200",
-    "deploy": "npm run build && surge --project dist --domain winecellar-bad.surge.sh"
+    "deploy": "npm run build && surge --project dist --domain winecellar.surge.sh"
   },
   "author": "Brecht Billiet <billietbrecht@gmail.com> Kwinten Pisman <>",
   "license": "ISC",
@@ -109,6 +109,7 @@
     "rxjs-es": "5.0.0-beta.12",
     "socket.io-client": "1.4.8",
     "toastr": "2.1.2",
+    "tslint": "3.15.1",
     "zone.js": "0.6.21"
   }
 }
