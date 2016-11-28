@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
 import {Wine} from "../../entities/Wine";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Subscription, Observable} from "rxjs";
 import {StockSandbox} from "../../stock.sandbox";
 @Component({
     selector: "edit-stock-page",
@@ -20,9 +20,13 @@ import {StockSandbox} from "../../stock.sandbox";
     </default-page>
      `
 })
-export class EditStockPageContainer implements OnDestroy, OnInit {
+export class EditStockPageContainer {
     id = this.route.snapshot.params["id"];
-    editWine: Wine;
+    editWine$ = this.sb.isAuthenticated$
+        .filter(isAuthenticated => isAuthenticated) // only when authenticated
+        .flatMap(() => {
+            return this.sb.fetchWine(this.id);
+        }).cache(); // avoid changedetection to run twice
     private subscriptions: Array<Subscription> = [];
 
     constructor(public sb: StockSandbox,
@@ -33,15 +37,5 @@ export class EditStockPageContainer implements OnDestroy, OnInit {
     onSave(wine: Wine): void {
         this.sb.updateWine(this.id, wine);
         this.router.navigate(["/stock"]);
-    }
-
-    ngOnDestroy(): void {
-        this.subscriptions.forEach(sub => sub.unsubscribe());
-    }
-
-    ngOnInit(): void {
-        this.subscriptions.push(this.sb.fetchWine(this.id).subscribe((wine: Wine) => {
-            this.editWine = wine;
-        }));
     }
 }
