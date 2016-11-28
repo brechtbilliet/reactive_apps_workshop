@@ -7,9 +7,9 @@ import {Store} from "@ngrx/store";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import * as orderBy from "lodash/orderBy";
 import * as sumBy from "lodash/sumBy";
-import {removeWine, updateRateWine, updateStockWine} from "../../../statemanagement/actionCreators";
 import {UNDO_ACTION} from "ngrx-undo";
 import * as toastr from "toastr";
+import {RemoveWine, UpdateRate, UpdateStock} from "../../../statemanagement/actions/data/wine";
 
 @Component({
     selector: "stock-page",
@@ -75,7 +75,7 @@ export class StockPageContainer implements OnDestroy {
     }
 
     onRemove(wine: Wine): void {
-        let action = removeWine(wine._id);
+        let action = new RemoveWine(wine._id);
         this.store.dispatch(action);
         this.subscriptions.push(this.stockService.remove(wine).subscribe(() => {
         }, () => {
@@ -85,7 +85,7 @@ export class StockPageContainer implements OnDestroy {
     }
 
     onSetRate(item: {wine: Wine, value: number}): void {
-        let action = updateRateWine(item.wine._id, item.value);
+        let action = new UpdateRate(item.wine._id, item.value);
         this.store.dispatch(action);
         this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe(() => {
         }, () => {
@@ -95,7 +95,7 @@ export class StockPageContainer implements OnDestroy {
     }
 
     onSetStock(item: {wine: Wine, value: number}): void {
-        let action = updateStockWine(item.wine._id, item.value);
+        let action = new UpdateStock(item.wine._id, item.value);
         this.store.dispatch(action);
         this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe(() => {
         }, () => {
