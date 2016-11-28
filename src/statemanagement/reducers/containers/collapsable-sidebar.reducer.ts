@@ -1,14 +1,14 @@
-import {Action} from "@ngrx/store";
-import {CONTAINER_COLLAPSABLESIDEBAR_TOGGLE} from "../../actionTypes";
+import {CollapsableSidebarContainerState} from "../../state/ContainersState";
+import * as sidebar from "../../actions/containers/sidebar";
 
-let initialState: {isCollapsed: boolean} = {
+let initialState: CollapsableSidebarContainerState = {
     isCollapsed: false
 };
 
-export function collapsableSidebarReducer(state: {isCollapsed: boolean} = initialState,
-                                          action: Action): {isCollapsed: boolean} {
+export function collapsableSidebarReducer(state: CollapsableSidebarContainerState = initialState,
+                                          action: sidebar.Actions): CollapsableSidebarContainerState {
     switch (action.type) {
-        case CONTAINER_COLLAPSABLESIDEBAR_TOGGLE:
+        case sidebar.ActionTypes.TOGGLE_SIDEBAR:
             return {
                 isCollapsed: !state.isCollapsed
             };
