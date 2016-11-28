@@ -8,7 +8,7 @@ import {LOCALSTORAGE_AUTH} from "../../../configuration";
 import {AuthenticationResult} from "../../types/AuthenticationResult";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import {Store} from "@ngrx/store";
-import {setAuthentication} from "../../../statemanagement/actionCreators";
+import {SetAuthentication} from "../../../statemanagement/actions/data/autentication";
 @Component({
     selector: "authentication",
     template: `
@@ -39,7 +39,7 @@ export class AuthenticationContainer implements OnDestroy {
         this.subscriptions.push(this.authenticationService.authenticate(credentials).subscribe((authenticationResult: AuthenticationResult) => {
             window.localStorage.setItem(LOCALSTORAGE_AUTH, JSON.stringify(authenticationResult));
             this.isBusy = true;
-            this.store.dispatch(setAuthentication(authenticationResult));
+            this.store.dispatch(new SetAuthentication(authenticationResult));
             this.router.navigate(["/"]);
         }));
     }
@@ -49,7 +49,7 @@ export class AuthenticationContainer implements OnDestroy {
         this.subscriptions.push(this.authenticationService.register(account).subscribe((authenticationResult: AuthenticationResult) => {
             window.localStorage.setItem(LOCALSTORAGE_AUTH, JSON.stringify(authenticationResult));
             this.isBusy = true;
-            this.store.dispatch(setAuthentication(authenticationResult));
+            this.store.dispatch(new SetAuthentication(authenticationResult));
             this.router.navigate(["/"]);
         }));
     }
