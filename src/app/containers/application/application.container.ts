@@ -5,10 +5,11 @@ import {AuthenticationService} from "../../../authentication/services/authentica
 import {LOCALSTORAGE_AUTH} from "../../../configuration";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import {Store} from "@ngrx/store";
-import {setAuthentication, clearAuthentication, addAllWines} from "../../../statemanagement/actionCreators";
 import {Subscription} from "rxjs";
 import {StockService} from "../../../stock/services/stock.service";
 import {Wine} from "../../../stock/entities/Wine";
+import {SetAllWines} from "../../../statemanagement/actions/data/wine";
+import {SetAuthentication, ClearAuthentication} from "../../../statemanagement/actions/data/autentication";
 @Component({
     selector: "application",
     providers: [Title],
@@ -36,13 +37,13 @@ export class ApplicationContainer implements OnInit, OnDestroy {
             // evil fix for bug in @ngrx/dev-tools
             // https://github.com/ngrx/store-devtools/issues/25
             setTimeout(() => {
-                this.store.dispatch(setAuthentication(obj));
+                this.store.dispatch(new SetAuthentication(obj));
             });
         }
         this.subscriptions.push(this.isAuthenticated$.subscribe((isAuthenticated: boolean) => {
             if (isAuthenticated) {
                 this.subscriptions.push(this.stockService.fetchAll().subscribe((wines: Array<Wine>) => {
-                    this.store.dispatch(addAllWines(wines));
+                    this.store.dispatch(new SetAllWines(wines));
                 }));
             }
         }));
@@ -50,7 +51,7 @@ export class ApplicationContainer implements OnInit, OnDestroy {
 
     logout(): void {
         localStorage.removeItem(LOCALSTORAGE_AUTH);
-        this.store.dispatch(clearAuthentication());
+        this.store.dispatch(new ClearAuthentication());
         this.router.navigate(["/authentication"]);
     }
 
