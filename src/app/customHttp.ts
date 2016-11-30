@@ -5,7 +5,6 @@ import {
 } from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {Store} from "@ngrx/store";
-import {enableBusy, disableBusy} from "../statemanagement/actionCreators";
 import {ApplicationState} from "../statemanagement/state/ApplicationState";
 @Injectable()
 export class CustomHttp extends Http {
@@ -78,14 +77,14 @@ export class CustomHttp extends Http {
     private httpCallReady(): void {
         this.activeCalls--;
         if (this.activeCalls === 0) {
-            // todo: disable the busy flag
+            // TODO: disable the busy flag
             // dispatch the action to the store
         }
     }
 
     private httpCallRequested(): void {
         if (this.activeCalls === 0) {
-            // todo: enable the busy flag
+            // TODO: enable the busy flag
             // dispatch the action to the store
         }
         this.activeCalls++;

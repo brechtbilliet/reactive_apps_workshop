@@ -3,9 +3,9 @@ import {Wine} from "../../entities/Wine";
 import {ActivatedRoute, Router} from "@angular/router";
 import {StockService} from "../../services/stock.service";
 import {Subscription} from "rxjs";
-import {updateWine} from "../../../statemanagement/actionCreators";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import {Store} from "@ngrx/store";
+import {UpdateWine} from "../../../statemanagement/actions/data/wine";
 @Component({
     selector: "edit-stock-page",
     template: `
@@ -35,7 +35,7 @@ export class EditStockPageContainer implements OnDestroy, OnInit {
 
     onSave(wine: Wine): void {
         this.subscriptions.push(this.stockService.update(this.id, wine).subscribe(() => {
-            this.store.dispatch(updateWine(this.id, wine));
+            this.store.dispatch(new UpdateWine(this.id, wine));
             this.router.navigate(["/stock"]);
         }));
     }

@@ -6,7 +6,7 @@ import {Subscription, Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import * as orderBy from "lodash/orderBy";
-import {removeWine, updateRateWine, updateStockWine} from "../../../statemanagement/actionCreators";
+import {RemoveWine, UpdateRate, UpdateStock} from "../../../statemanagement/actions/data/wine";
 @Component({
     selector: "stock-page",
     template: `
@@ -60,6 +60,8 @@ export class StockPageContainer implements OnDestroy {
             return wines.filter(wine => wine.name.toLowerCase().indexOf(term) > -1);
         });
     favoriteWines: Array<Wine>;
+    //TODO: Total number of wines
+    //TODO: Total value of the wine cellar
 
     private subscriptions: Array<Subscription> = [];
 
@@ -71,19 +73,19 @@ export class StockPageContainer implements OnDestroy {
 
     onRemove(wine: Wine): void {
         this.subscriptions.push(this.stockService.remove(wine).subscribe(() => {
-            this.store.dispatch(removeWine(wine._id));
+            this.store.dispatch(new RemoveWine(wine._id));
         }));
     }
 
     onSetRate(item: {wine: Wine, value: number}): void {
         this.subscriptions.push(this.stockService.setRate(item.wine, item.value).subscribe(() => {
-            this.store.dispatch(updateRateWine(item.wine._id, item.value));
+            this.store.dispatch(new UpdateRate(item.wine._id, item.value));
         }));
     }
 
     onSetStock(item: {wine: Wine, value: number}): void {
         this.subscriptions.push(this.stockService.setStock(item.wine, item.value).subscribe(() => {
-            this.store.dispatch(updateStockWine(item.wine._id, item.value));
+            this.store.dispatch(new UpdateStock(item.wine._id, item.value));
         }));
     }
 
