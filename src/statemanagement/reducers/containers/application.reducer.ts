@@ -1,13 +1,15 @@
-import {Action} from "@ngrx/store";
+import {ApplicationContainerState} from "../../state/ContainersState";
+import * as application from "../../actions/containers/application";
 
-let initialState: {isBusy: boolean} = {
+let initialState: ApplicationContainerState = {
     isBusy: false
 };
 
-export function applicationReducer(state: {isBusy: boolean} = initialState,
-                                   action: Action): {isBusy: boolean} {
+export function applicationReducer(state: ApplicationContainerState = initialState,
+                                   action: application.Actions): ApplicationContainerState {
     //TODO: implement the following action types:
-    // - CONTAINER_APPLICATION_ENABLE_BUSY_FLAG -> should set the isBusy flag to true
-    // - CONTAINER_APPLICATION_DISABLE_BUSY_FLAG -> should set the isBusy flag to false
+    // - application.ActionTypes.ENABLE_BUSY_FLAG -> should set the isBusy flag to true 
+    // - application.ActionTypes.DISABLE_BUSY_FLAG -> should set the isBusy flag to false 
     // - don't forget the default state!
+    return null;
 };
