@@ -5,9 +5,9 @@ import {AuthenticationService} from "../../../authentication/services/authentica
 import {LOCALSTORAGE_AUTH} from "../../../configuration";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
 import {Store} from "@ngrx/store";
-import {setAuthentication, clearAuthentication} from "../../../statemanagement/actionCreators";
 import {Account} from "../../../authentication/types/Account";
 import {Subscription} from "rxjs";
+import {ClearAuthentication, SetAuthentication} from "../../../statemanagement/actions/data/autentication";
 @Component({
     selector: "application",
     providers: [Title],
@@ -33,7 +33,7 @@ export class ApplicationContainer implements OnInit, OnDestroy {
             // evil fix for bug in @ngrx/dev-tools
             // https://github.com/ngrx/store-devtools/issues/25
             setTimeout(() => {
-                this.store.dispatch(setAuthentication(obj));
+                this.store.dispatch(new SetAuthentication(obj));
             });
         }
         this.subscriptions.push(this.store.subscribe((state: ApplicationState) => {
@@ -44,7 +44,7 @@ export class ApplicationContainer implements OnInit, OnDestroy {
 
     logout(): void {
         localStorage.removeItem(LOCALSTORAGE_AUTH);
-        this.store.dispatch(clearAuthentication());
+        this.store.dispatch(new ClearAuthentication());
         this.router.navigate(["/authentication"]);
     }
 

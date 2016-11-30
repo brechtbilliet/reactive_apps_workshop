@@ -1,12 +1,6 @@
-import {Wine} from "../../stock/entities/Wine";
-import {AuthenticationDataState} from "./AuthenticationDataState";
+import {ContainersState} from "./ContainersState";
+import {DataState} from "./DataState";
 export interface ApplicationState {
-    containers: {
-        application: {isBusy: boolean};
-        collapsableSidebar: {isCollapsed: boolean}
-    };
-    data: {
-        authentication: AuthenticationDataState;
-        wines: Array<Wine>
-    }
+    containers: ContainersState;
+    data: DataState;
 }
