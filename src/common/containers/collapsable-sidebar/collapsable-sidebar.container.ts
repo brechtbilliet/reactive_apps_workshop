@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation, OnDestroy} from "@angular/core";
 import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../../../statemanagement/state/ApplicationState";
-import {toggleSidebar} from "../../../statemanagement/actionCreators";
+import {ToggleSidebar} from "../../../statemanagement/actions/containers/sidebar";
 @Component({
     selector: "collapsable-sidebar",
     encapsulation: ViewEncapsulation.None,
@@ -32,6 +32,6 @@ export class CollapsableSidebarContainer implements OnDestroy {
     }
 
     toggle(): void {
-        this.store.dispatch(toggleSidebar());
+        this.store.dispatch(new ToggleSidebar());
     }
 }
