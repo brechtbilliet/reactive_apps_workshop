@@ -10,11 +10,11 @@ There are 3 actions:
 <li>DATA_WINES_UPDATE_RATE</li> 
 <li>DATA_WINES_UPDATE_STOCK</li>
 </ul>
-For that we have created 3 actioncreators:
+For that we have created 3 action classes:
 <ul>
-<li>removeWine(id)</li>
-<li>updateRateWine(id, myRating)</li>
-<li>updateStockWine(id, inStock)</li>
+<li>RemoveWine</li>
+<li>UpdateRate</li>
+<li>updateStock</li>
 </ul>
 
 Go to 'src/stock/containers/stock-page/stock-page.container.ts' and implement the missing functions.
@@ -25,8 +25,14 @@ Open the redux devtools with **ctrl-L** and check the actions being dispatched a
 Implement the collapsable-sidebar to use redux.
 Go to 'src/common/containers/collapsable-sidebar/collapsable-sidebar.container.ts'
 
-There is one action: CONTAINER_COLLAPSABLESIDEBAR_TOGGLE
+There is one action: CONTAINER_COLLAPSABLESIDEBAR_TOGGLE with one action class ToggleSidebar
 
-We created an actioncreator for that action: toggleSidebar()
+We created an action class for that action: ToggleSidebar
 
 Use that action to toggle the sidebar and fetch the `isCollapsed` property from the state. When you collapse the sidebar, and navigate to about and back... The sidebar should remain collapsed. You can also verify this in the store devtools (**ctrl-L**).
+
+## Bonus exercise
+Implement the add-stock-page to use redux.
+Go to 'src/stock/containers/add-stock-page/add-stock-page.container.ts'
+
+Dispatch the `DATA_WINES_ADD` action via the `AddWine` class.

@@ -17,7 +17,7 @@ export class CollapsableSidebarContainer {
 
     toggle(): void {
         this.isCollapsed = !this.isCollapsed;
-        // todo: inject the store in the constructor, and dispatch an action here
+        // TODO: inject the store in the constructor, and dispatch an action here
         // update the isCollapsed based on the isCollapsed property in the store
     }
 }

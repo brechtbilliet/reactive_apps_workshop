@@ -28,6 +28,7 @@ export class AddStockPageContainer implements OnDestroy {
     onSave(wine: Wine): void {
         this.subscriptions.push(this.stockService.add(wine).subscribe(() => {
             this.router.navigate(["/stock"]);
+            // TODO: dispatch the correct action here
         }));
     }
 
