@@ -41,7 +41,6 @@
     "no-require-imports": false,
     "no-string-literal": false,
     "no-switch-case-fall-through": true,
-    "no-trailing-comma": true,
     "no-trailing-whitespace": true,
     "no-unreachable": true,
     "no-unused-expression": true,
@@ -59,6 +58,7 @@
     "radix": true,
     "semicolon": true,
     "switch-default": true,
+    "trailing-comma": [false],
     "triple-equals": [true, "allow-null-check"],
     "typedef-whitespace": [true, {
       "call-signature": "nospace",
