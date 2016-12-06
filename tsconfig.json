@@ -15,7 +15,10 @@
       "lodash",
       "node",
       "toastr"
-    ]
+    ],
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+
   },
   "exclude": [
     "out",
