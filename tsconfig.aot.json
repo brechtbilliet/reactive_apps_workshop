@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es5",
     "module": "es2015",
     "moduleResolution": "node",
     "declaration": false,
@@ -21,7 +21,8 @@
       "node",
       "jasmine",
       "lodash",
-      "toastr"
+      "toastr",
+      "core-js"
     ]
   },
   "angularCompilerOptions": {

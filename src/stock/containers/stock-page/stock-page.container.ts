@@ -1,7 +1,8 @@
 import {Component} from "@angular/core";
 import {Wine} from "../../entities/Wine";
 import {FormControl} from "@angular/forms";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/rx";
+// import "rxjs/add/operator/map";
 import * as orderBy from "lodash/orderBy";
 import * as sumBy from "lodash/sumBy";
 import {StockSandbox} from "../../stock.sandbox";

@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "0.6.2",
+    "@types/core-js": "0.9.35",
     "awesome-typescript-loader": "2.2.4",
     "babel-core": "6.8.0",
     "babel-loader": "6.2.5",

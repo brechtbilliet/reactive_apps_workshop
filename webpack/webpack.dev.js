@@ -32,7 +32,6 @@ module.exports = {
             'rxjs/BehaviorSubject',
             'rxjs/ReplaySubject',
             'rxjs/Subscription',
-            'rxjs/add/operator/map',
             'rxjs/add/operator/finally',
             'rxjs/add/operator/filter',
             'rxjs/add/operator/take',

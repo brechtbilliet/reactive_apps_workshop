@@ -1,7 +1,7 @@
 import {enableProdMode} from "@angular/core";
 import {platformBrowser} from "@angular/platform-browser";
 import "rxjs/add/operator/cache";
-import "rxjs/add/operator/map";
+// import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
 import "rxjs/add/operator/share";
 import "rxjs/add/operator/take";
