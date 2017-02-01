@@ -7,8 +7,8 @@ export const ActionTypes = {
 }
 
 export class SetAuthentication implements Action {
-    readonly type = ActionTypes.SET_AUTHENTICATION;
-    readonly payload: {authenticationResult: AuthenticationResult};
+    type = ActionTypes.SET_AUTHENTICATION;
+    payload: {authenticationResult: AuthenticationResult};
 
     public constructor(authenticationResult: AuthenticationResult) {
         this.payload = {authenticationResult};
@@ -16,7 +16,7 @@ export class SetAuthentication implements Action {
 }
 
 export class ClearAuthentication implements Action {
-    readonly type = ActionTypes.CLEAR_AUTHENTICATION;
+    type = ActionTypes.CLEAR_AUTHENTICATION;
 
     public constructor() {}
 }
