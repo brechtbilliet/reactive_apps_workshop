@@ -2,12 +2,12 @@ import {type} from "../../util/util";
 import {Action} from "@ngrx/store";
 import {Wine} from "../../../stock/entities/Wine";
 export const ActionTypes = {
-    WINES_ADD: type("DATA_WINES_ADD"),
-    WINES_REMOVE: type("DATA_WINES_REMOVE"),
-    WINES_UPDATE: type("DATA_WINES_UPDATE"),
-    WINES_UPDATE_RATE: type("DATA_WINES_UPDATE_RATE"),
-    WINES_UPDATE_STOCK: type("DATA_WINES_UPDATE_STOCK"),
-    WINES_SET_ALL: type("DATA_WINES_ADD_ALL"),
+    WINES_ADD: type<"DATA_WINES_ADD">("DATA_WINES_ADD"),
+    WINES_REMOVE: type<"DATA_WINES_REMOVE">("DATA_WINES_REMOVE"),
+    WINES_UPDATE: type<"DATA_WINES_UPDATE">("DATA_WINES_UPDATE"),
+    WINES_UPDATE_RATE: type<"DATA_WINES_UPDATE_RATE">("DATA_WINES_UPDATE_RATE"),
+    WINES_UPDATE_STOCK: type<"DATA_WINES_UPDATE_STOCK">("DATA_WINES_UPDATE_STOCK"),
+    WINES_SET_ALL: type<"DATA_WINES_ADD_ALL">("DATA_WINES_ADD_ALL"),
 }
 
 export class AddWine implements Action {
