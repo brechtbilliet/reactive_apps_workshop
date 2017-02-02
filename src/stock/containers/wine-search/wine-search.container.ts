@@ -31,20 +31,15 @@ export class WineSearchContainer implements OnChanges {
     @Output() selectWine = new EventEmitter<Product>();
     control = new FormControl("");
 
-    private showResults$ = new BehaviorSubject(true);
-    private foundWines$ = this.control.valueChanges
-        .do((value: string) => this.showResults$.next(false)) // user types, hide the results
+    private showResults$ = new BehaviorSubject([]);
+    private winesToShow$ = this.control.valueChanges
+        .do((value: string) => this.showResults$.next([])) // user types, hide the results
         .filter(value => value.length > 2)
         .debounceTime(300)
         .switchMap(value => this.sb.search(value))
         .map((res: WineComSearchResult) => res.products.list)
-        .do(() => this.showResults$.next(true)); // call is done, show results
-
-    winesToShow$ = Observable.combineLatest(this.showResults$, this.foundWines$,
-        (showResults: boolean, foundWines: Array<Product>) => {
-            return showResults ? foundWines : [];
-        })
-        .distinctUntilChanged(); // distinct the results
+        .merge(this.showResults$) // Merge the showResults$ stream to clear results at certain moments in time
+        .distinctUntilChanged();
 
     constructor(private sb: StockSandbox) {
     }
@@ -55,6 +50,6 @@ export class WineSearchContainer implements OnChanges {
 
     onSelectWine(wine: Product): void {
         this.selectWine.emit(wine);
-        this.showResults$.next(false);
+        this.showResults$.next([]);
     }
 }
