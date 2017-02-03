@@ -8,6 +8,7 @@ import {Wine} from "../stock/entities/Wine";
 import {LOCALSTORAGE_AUTH} from "../configuration";
 import {ClearAuthentication, SetAuthentication} from "../statemanagement/actions/data/autentication";
 import {SetAllWines} from "../statemanagement/actions/data/wine";
+import {ResetStore} from "../statemanagement/metareducers/reset-reducer";
 @Injectable()
 export class AppSandbox {
     isAuthenticated$ = this.store.select(state => state.data.authentication.isAuthenticated);
@@ -21,7 +22,7 @@ export class AppSandbox {
 
     logout(): void {
         localStorage.removeItem(LOCALSTORAGE_AUTH);
-        this.store.dispatch(new ClearAuthentication());
+        this.store.dispatch(new ResetStore());
         this.realTime.disconnect();
     }
 
