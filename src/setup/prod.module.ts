@@ -18,12 +18,12 @@ export class ApplicationWrapperContainer {
 // Compose all our middleware with the rootReducer
 const composedReducer = compose(reset, combineReducers)(rootReducer);
 
-export function getRootReducer(state: any, action: any) {
+export function getComposedReducer(state: any, action: any) {
     return composedReducer(state, action);
 }
 
 @NgModule({
-    imports: [StoreModule.provideStore(getRootReducer), StoreUndoModule.interceptStore({
+    imports: [StoreModule.provideStore(getComposedReducer), StoreUndoModule.interceptStore({
         bufferSize: 200 // Set the size of the buffer (Default: 100)
     }), AppModule],
     declarations: [ApplicationWrapperContainer],

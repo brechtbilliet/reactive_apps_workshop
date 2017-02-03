@@ -21,13 +21,13 @@ export class ApplicationWrapperContainer {
 // Compose all our middleware with the rootReducer
 const composedReducer = compose(storeFreeze, reset, combineReducers)(rootReducer);
 
-export function getRootReducer(state: any, action: any) {
+export function getComposedReducer(state: any, action: any) {
     return composedReducer(state, action);
 }
 
 @NgModule({
     imports: [
-        StoreModule.provideStore(getRootReducer), StoreDevtoolsModule.instrumentStore({
+        StoreModule.provideStore(getComposedReducer), StoreDevtoolsModule.instrumentStore({
             monitor: useLogMonitor({
                 visible: false,
                 position: "right"
