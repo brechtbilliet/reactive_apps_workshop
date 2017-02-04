@@ -9,5 +9,6 @@ npm-debug.log
 reports
 out_aot
 *.ngfactory.ts
-out_aot_ts
+out_es2015
 out_treeshaked
+.vscode
