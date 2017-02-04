@@ -58,8 +58,8 @@ module.exports = {
         }
     },
     resolve: {
-        root: __dirname,
-        extensions: ['', '.ts', '.js']
+        modules: [__dirname, 'node_modules'],
+        extensions: ['.ts', '.js']
     },
     devtool: 'cheap-module-eval-source-map',
     plugins: [
