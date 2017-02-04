@@ -1,9 +1,8 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges } from '@angular/core';
-import { Product, WineComSearchResult } from '../../services/wineCom.service';
-import { StockSandbox } from '../../stock.sandbox';
-import { FormControl } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges} from "@angular/core";
+import {Product, WineComSearchResult} from "../../services/wineCom.service";
+import {StockSandbox} from "../../stock.sandbox";
+import {FormControl} from "@angular/forms";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Component({
     selector: "wine-search",
@@ -31,14 +30,18 @@ export class WineSearchContainer implements OnChanges {
     @Output() selectWine = new EventEmitter<Product>();
     control = new FormControl("");
 
-    private showResults$ = new BehaviorSubject([]);
+    private showResults$ = new BehaviorSubject(true);
+
+    private clear$ = this.showResults$.filter(val => !val)
+        .map(() => []);
+
     private winesToShow$ = this.control.valueChanges
-        .do((value: string) => this.showResults$.next([])) // user types, hide the results
+        .do((value: string) => this.showResults$.next(false)) // user types, hide the results
         .filter(value => value.length > 2)
         .debounceTime(300)
         .switchMap(value => this.sb.search(value))
         .map((res: WineComSearchResult) => res.products.list)
-        .merge(this.showResults$) // Merge the showResults$ stream to clear results at certain moments in time
+        .merge(this.clear$)
         .distinctUntilChanged();
 
     constructor(private sb: StockSandbox) {
@@ -50,6 +53,6 @@ export class WineSearchContainer implements OnChanges {
 
     onSelectWine(wine: Product): void {
         this.selectWine.emit(wine);
-        this.showResults$.next([]);
+        this.showResults$.next(false);
     }
 }
