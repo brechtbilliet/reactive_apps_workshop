@@ -11,7 +11,7 @@ export class ResetStore implements Action {
 }
 
 export function reset(reducer, initialState?: ApplicationState): ActionReducer<ApplicationState> {
-    return function (state, action) {
+    return (state: ApplicationState, action: Action) => {
         if (action.type === actionTypes.RESET_STORE) {
             return initialState;
         }
