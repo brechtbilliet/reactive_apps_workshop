@@ -55,7 +55,6 @@
       "check-else",
       "check-whitespace"
     ],
-    "quotemark": [true, "double"],
     "radix": true,
     "semicolon": true,
     "switch-default": true,
