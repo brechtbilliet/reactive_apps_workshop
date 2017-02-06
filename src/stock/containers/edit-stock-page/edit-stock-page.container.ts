@@ -23,10 +23,11 @@ import {StockSandbox} from "../../stock.sandbox";
 export class EditStockPageContainer {
     id = this.route.snapshot.params["id"];
     editWine$ = this.sb.isAuthenticated$
+        .take(1)
         .filter(isAuthenticated => isAuthenticated) // only when authenticated
         .flatMap(() => {
             return this.sb.fetchWine(this.id);
-        }).cache(); // avoid changedetection to run twice
+        });
     private subscriptions: Array<Subscription> = [];
 
     constructor(public sb: StockSandbox,

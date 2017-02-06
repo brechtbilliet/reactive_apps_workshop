@@ -21,7 +21,6 @@ module.exports = {
         extensions: ['.ts', '.js', '.json']
     },
     devtool: false,
-    debug: true,
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
             comments: false,
