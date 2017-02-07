@@ -1,6 +1,6 @@
 import {ContainersState} from "./ContainersState";
 import {DataState} from "./DataState";
-interface ApplicationStateStructure {
+type ApplicationStateStructure = {
     containers: ContainersState;
     data: DataState;
 }

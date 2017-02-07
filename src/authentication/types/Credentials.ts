@@ -1,4 +1,4 @@
-interface CredentialsStructure {
+type CredentialsStructure = {
     login: string;
     password: string;
 }

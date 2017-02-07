@@ -1,4 +1,4 @@
-interface AuthenticationResultStructure {
+type AuthenticationResultStructure = {
     token: string;
     login: string;
     firstName: string;

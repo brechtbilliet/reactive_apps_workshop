@@ -1,4 +1,4 @@
-interface AccountStructure {
+type AccountStructure = {
     firstName: string;
     lastName: string;
     login: string;

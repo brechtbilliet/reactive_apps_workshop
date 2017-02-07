@@ -1,14 +1,14 @@
 import {Wine} from "../../stock/entities/Wine";
 import {Account} from "../../authentication/types/Account";
 
-interface DataStateStructure {
+type DataStateStructure = {
     authentication: AuthenticationDataState;
     wines: Array<Wine>;
 }
 
 export type DataState = Readonly<DataStateStructure>;
 
-interface AuthenticationDataStateStructure {
+type AuthenticationDataStateStructure = {
     isAuthenticated: boolean;
     jwtToken: string;
     account: Account;
