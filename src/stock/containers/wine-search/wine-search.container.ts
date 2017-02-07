@@ -35,7 +35,7 @@ export class WineSearchContainer implements OnChanges {
     private clear$ = this.showResults$.filter(val => !val)
         .map(() => []);
 
-    public winesToShow$ = this.control.valueChanges
+    winesToShow$ = this.control.valueChanges
         .do((value: string) => this.showResults$.next(false)) // user types, hide the results
         .filter(value => value.length > 2)
         .debounceTime(300)
