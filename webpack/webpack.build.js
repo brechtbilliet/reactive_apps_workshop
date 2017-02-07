@@ -17,11 +17,10 @@ module.exports = {
         publicPath: '/'
     },
     resolve: {
-        root: __dirname,
-        extensions: ['', '.ts', '.js', '.json']
+        modules: [__dirname, 'node_modules'],
+        extensions: ['.ts', '.js', '.json']
     },
     devtool: false,
-    debug: true,
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
             comments: false,
