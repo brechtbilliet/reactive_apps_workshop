@@ -27,39 +27,39 @@ function camelCaseReviver(key: string, value: any): any {
     return value;
 }
 
-export type WineComSearchResult = {
-    readonly products: Products;
-}
-export type Products = {
-    readonly list: Array<Product>;
-    readonly offset: number;
-    readonly total: number;
-}
-export type Product = {
-    readonly name: string;
-    readonly priceMax: number;
-    readonly priceMin: number;
-    readonly priceRetail: number;
-    readonly ratings: Ratings;
-    readonly labels: Array<Label>;
-    readonly appellation: Appellation;
-    readonly description: string;
-    readonly id: number;
-    readonly varietal: Varietal;
-}
-export type Ratings = {
-    readonly highestScore: number;
-}
-export type Label = {
-    readonly name: string;
-    readonly url: string;
-}
-export type Appellation = {
-    readonly region: Region;
-}
-export type Region = {
-    readonly name: string;
-}
-export type Varietal = {
-    readonly name: string;
-}
+export type WineComSearchResult = Readonly<{
+    products: Products;
+}>;
+export type Products = Readonly<{
+     list: Array<Product>;
+     offset: number;
+     total: number;
+}>;
+export type Product = Readonly<{
+     name: string;
+     priceMax: number;
+     priceMin: number;
+     priceRetail: number;
+     ratings: Ratings;
+     labels: Array<Label>;
+     appellation: Appellation;
+     description: string;
+     id: number;
+     varietal: Varietal;
+}>;
+export type Ratings = Readonly<{
+     highestScore: number;
+}>;
+export type Label = Readonly<{
+     name: string;
+     url: string;
+}>;
+export type Appellation = Readonly<{
+     region: Region;
+}>;
+export type Region = Readonly<{
+     name: string;
+}>;
+export type Varietal = Readonly<{
+     name: string;
+}>;
