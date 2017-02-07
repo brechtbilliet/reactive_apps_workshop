@@ -11,6 +11,7 @@ import {StockService} from "../../../stock/services/stock.service";
 import {Wine} from "../../../stock/entities/Wine";
 import {SetAuthentication, ClearAuthentication} from "../../../statemanagement/actions/data/autentication";
 import {SetAllWines} from "../../../statemanagement/actions/data/wine";
+import {ResetStore} from "../../../statemanagement/metareducers/reset-reducer";
 @Component({
     selector: "application",
     providers: [Title],
@@ -52,7 +53,7 @@ export class ApplicationContainer implements OnInit, OnDestroy {
 
     logout(): void {
         localStorage.removeItem(LOCALSTORAGE_AUTH);
-        this.store.dispatch(new ClearAuthentication());
+        this.store.dispatch(new ResetStore());
         this.router.navigate(["/authentication"]);
     }
 

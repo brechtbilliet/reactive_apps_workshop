@@ -1,6 +1,5 @@
 import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
 import {hotModuleReplacement} from "./hot-store";
-import "rxjs/add/operator/cache";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
 import "rxjs/add/operator/share";

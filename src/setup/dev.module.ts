@@ -1,9 +1,12 @@
 import {AppModule} from "../app";
 import {NgModule, Component} from "@angular/core";
-import {StoreModule} from "@ngrx/store";
+import {StoreModule, combineReducers} from "@ngrx/store";
 import {rootReducer} from "../statemanagement/rootReducer";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {StoreLogMonitorModule, useLogMonitor} from "@ngrx/store-log-monitor";
+import {compose} from "@ngrx/core";
+import {reset} from "../statemanagement/metareducers/reset-reducer";
+import {storeFreeze} from "ngrx-store-freeze";
 @Component({
     selector: "application-wrapper",
     template: `   
@@ -14,9 +17,16 @@ import {StoreLogMonitorModule, useLogMonitor} from "@ngrx/store-log-monitor";
 export class ApplicationWrapperContainer {
 }
 
+// Compose all our middleware with the rootReducer
+const composedReducer = compose(storeFreeze, reset, combineReducers)(rootReducer);
+
+export function getComposedReducer(state: any, action: any) {
+    return composedReducer(state, action);
+}
+
 @NgModule({
     imports: [
-        StoreModule.provideStore(rootReducer), StoreDevtoolsModule.instrumentStore({
+        StoreModule.provideStore(getComposedReducer), StoreDevtoolsModule.instrumentStore({
             monitor: useLogMonitor({
                 visible: false,
                 position: "right"
