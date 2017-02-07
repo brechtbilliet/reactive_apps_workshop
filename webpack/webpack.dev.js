@@ -2,8 +2,10 @@ const loaders = require('./loaders');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const path = require("path");
 var StringReplacePlugin = require("string-replace-webpack-plugin");
 var API_KEY = process.env.npm_config_apikey;
+
 
 module.exports = {
     entry: {
@@ -82,7 +84,12 @@ module.exports = {
             'window.jQuery': 'jquery',
             'window.jquery': 'jquery'
         }),
-        new OpenBrowserPlugin({url: 'http://localhost:8080'})
+        new OpenBrowserPlugin({url: 'http://localhost:8080'}),
+        // FIXME temporary workaround for https://github.com/angular/angular/issues/11580
+        new webpack.ContextReplacementPlugin(
+            /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+            path.resolve(__dirname, 'doesnotexist/')
+        )
     ],
     module: {
         loaders: loaders.concat([
