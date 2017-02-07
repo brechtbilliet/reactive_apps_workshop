@@ -12,7 +12,7 @@ export const ActionTypes = {
 
 export class AddWine implements Action {
     type = ActionTypes.WINES_ADD;
-    payload: {wine: Wine};
+    payload: Readonly<{wine: Wine}>;
 
     constructor(wine: Wine){
         this.payload = {wine};
@@ -21,7 +21,7 @@ export class AddWine implements Action {
 
 export class RemoveWine implements Action {
     type = ActionTypes.WINES_REMOVE;
-    payload: {_id: string};
+    payload: Readonly<{_id: string}>;
 
     constructor(_id: string){
         this.payload = {_id};
@@ -30,7 +30,7 @@ export class RemoveWine implements Action {
 
 export class UpdateWine implements Action {
     type = ActionTypes.WINES_UPDATE;
-    payload: {_id: string, wine: Wine};
+    payload: Readonly<{_id: string, wine: Wine}>;
 
     constructor(_id: string, wine: Wine){
         this.payload = {_id, wine};
@@ -39,7 +39,7 @@ export class UpdateWine implements Action {
 
 export class UpdateRate implements Action {
     type = ActionTypes.WINES_UPDATE_RATE;
-    payload: {_id: string, myRating: number};
+    payload: Readonly<{_id: string, myRating: number}>;
 
     constructor(_id: string, myRating: number){
         this.payload = {_id, myRating};
@@ -48,7 +48,7 @@ export class UpdateRate implements Action {
 
 export class UpdateStock implements Action {
     type = ActionTypes.WINES_UPDATE_STOCK;
-    payload: {_id: string, myStock: number};
+    payload: Readonly<{_id: string, myStock: number}>;
 
     constructor(_id: string, myStock: number){
         this.payload = {_id, myStock};
@@ -57,7 +57,7 @@ export class UpdateStock implements Action {
 
 export class SetAllWines implements Action {
     type = ActionTypes.WINES_SET_ALL;
-    payload: {wines: Wine[]};
+    payload: Readonly<{wines: Wine[]}>;
 
     constructor(wines: Wine[]){
         this.payload = {wines};

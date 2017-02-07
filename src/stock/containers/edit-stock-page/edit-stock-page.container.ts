@@ -18,6 +18,8 @@ import {StockSandbox} from "../../stock.sandbox";
             </div>
         </main>
     </default-page>
+    blablas
+    {{editWine$ | async | json}}
      `
 })
 export class EditStockPageContainer {

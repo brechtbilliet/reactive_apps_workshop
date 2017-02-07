@@ -1,12 +1,16 @@
-export interface ContainersState {
+interface ContainersStateStructure {
     application: ApplicationContainerState;
     collapsableSidebar: CollapsableSidebarContainerState;
 }
+export type ContainersState = Readonly<ContainersStateStructure>;
 
-export interface ApplicationContainerState {
+interface ApplicationContainerStateStructure {
     isBusy: boolean;
 }
+export type ApplicationContainerState = Readonly<ApplicationContainerStateStructure>;
 
-export interface CollapsableSidebarContainerState {
+
+export interface CollapsableSidebarContainerStateStructure {
     isCollapsed: boolean;
 }
+export type CollapsableSidebarContainerState = Readonly<CollapsableSidebarContainerStateStructure>;
