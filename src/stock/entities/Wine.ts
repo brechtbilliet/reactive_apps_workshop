@@ -1,12 +1,12 @@
 export class Wine {
     _id: string;
 
-    constructor(public name: string = "",
-                public description: string = "",
-                public region: string = "",
-                public inStock: number = 0,
-                public price: number = 0,
-                public myRating: number = 0,
-                public image: string = null) {
+    constructor(public readonly name: string = "",
+                public readonly description: string = "",
+                public readonly region: string = "",
+                public readonly inStock: number = 0,
+                public readonly price: number = 0,
+                public readonly myRating: number = 0,
+                public readonly image: string = null) {
     }
 }
