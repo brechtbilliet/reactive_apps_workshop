@@ -8,6 +8,7 @@ import {Store} from "@ngrx/store";
 import {Account} from "../../../authentication/types/Account";
 import {Subscription} from "rxjs";
 import {ClearAuthentication, SetAuthentication} from "../../../statemanagement/actions/data/autentication";
+import {ResetStore} from "../../../statemanagement/metareducers/reset-reducer";
 @Component({
     selector: "application",
     providers: [Title],
@@ -44,7 +45,7 @@ export class ApplicationContainer implements OnInit, OnDestroy {
 
     logout(): void {
         localStorage.removeItem(LOCALSTORAGE_AUTH);
-        this.store.dispatch(new ClearAuthentication());
+        this.store.dispatch(new ResetStore());
         this.router.navigate(["/authentication"]);
     }
 

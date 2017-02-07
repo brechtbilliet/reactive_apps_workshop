@@ -11,11 +11,8 @@ let containersReducers = combineReducers({
     collapsableSidebar: collapsableSidebarReducer,
     application: applicationReducer
 });
-let productionReducer = combineReducers({
+
+export let rootReducer = {
     data: dataReducers,
     containers: containersReducers
-});
-
-export function rootReducer(state: any, action: any) {
-    return productionReducer(state, action);
-}
+};
