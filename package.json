@@ -70,7 +70,7 @@
     "typescript": "2.1.5",
     "uglifyjs": "2.4.10",
     "url-loader": "0.5.7",
-    "wallaby-webpack": "0.0.23",
+    "wallaby-webpack": "0.0.32",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.2.1"
   },
