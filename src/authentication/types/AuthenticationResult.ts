@@ -1,8 +1,6 @@
-type AuthenticationResultStructure = {
+export type AuthenticationResult = Readonly<{
     token: string;
     login: string;
     firstName: string;
     lastName: string;
-}
-
-export type AuthenticationResult = Readonly<AuthenticationResultStructure>;
+}>;
