@@ -1,8 +1,7 @@
 import {ContainersState} from "./ContainersState";
 import {DataState} from "./DataState";
-type ApplicationStateStructure = {
+
+export type ApplicationState = Readonly<{
     containers: ContainersState;
     data: DataState;
-}
-
-export type ApplicationState = Readonly<ApplicationStateStructure>;
+}>;
