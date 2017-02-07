@@ -16,6 +16,7 @@ let productionReducer = combineReducers({
     containers: containersReducers
 });
 
-export function rootReducer(state: any, action: any) {
-    return productionReducer(state, action);
-}
+export let rootReducer = {
+    data: dataReducers,
+    containers: containersReducers
+};
