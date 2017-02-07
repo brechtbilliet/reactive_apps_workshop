@@ -1,8 +1,9 @@
-import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges} from "@angular/core";
-import {Product, WineComSearchResult} from "../../services/wineCom.service";
-import {StockSandbox} from "../../stock.sandbox";
-import {FormControl} from "@angular/forms";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import { Product, WineComSearchResult } from '../../services/wineCom.service';
+import { StockSandbox } from '../../stock.sandbox';
+import { FormControl } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: "wine-search",
@@ -31,18 +32,19 @@ export class WineSearchContainer implements OnChanges {
     control = new FormControl("");
 
     private showResults$ = new BehaviorSubject(true);
-
-    private clear$ = this.showResults$.filter(val => !val)
-        .map(() => []);
-
-    private winesToShow$ = this.control.valueChanges
+    private foundWines$ = this.control.valueChanges
         .do((value: string) => this.showResults$.next(false)) // user types, hide the results
         .filter(value => value.length > 2)
         .debounceTime(300)
         .switchMap(value => this.sb.search(value))
         .map((res: WineComSearchResult) => res.products.list)
-        .merge(this.clear$)
-        .distinctUntilChanged();
+        .do(() => this.showResults$.next(true)); // call is done, show results
+
+    winesToShow$ = Observable.combineLatest(this.showResults$, this.foundWines$,
+        (showResults: boolean, foundWines: Array<Product>) => {
+            return showResults ? foundWines : [];
+        })
+        .distinctUntilChanged(); // distinct the results
 
     constructor(private sb: StockSandbox) {
     }

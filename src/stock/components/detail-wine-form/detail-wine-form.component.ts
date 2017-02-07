@@ -8,7 +8,7 @@ import {Product} from "../../services/wineCom.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <form [formGroup]="wineForm" class="form-horizontal col-sm-12" (ngSubmit)="onSubmit()">
-            <wine-search [control]="wineForm.controls['name']" (selectWine)="onSelectWine($event)"></wine-search>
+            <wine-search [name]="wineForm.controls['name'].value" (selectWine)="onSelectWine($event)"></wine-search>
             <form-group-textarea [label]="'Description'" [control]="wineForm.controls['description']"
                                  [placeholder]="'Enter description'">
             </form-group-textarea>
