@@ -6,7 +6,7 @@ import {
 import {Observable} from "rxjs/Observable";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../statemanagement/state/ApplicationState";
-import {EnableBusyFlag, DisableBusyFlag} from "../statemanagement/actions/containers/application";
+import {DisableBusyFlag, EnableBusyFlag} from "../statemanagement/actions/containers/application";
 @Injectable()
 export class CustomHttp extends Http {
     private activeCalls: number;

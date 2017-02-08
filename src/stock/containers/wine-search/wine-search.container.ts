@@ -1,9 +1,8 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges } from '@angular/core';
-import { Product, WineComSearchResult } from '../../services/wineCom.service';
-import { StockSandbox } from '../../stock.sandbox';
-import { FormControl } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, SimpleChanges} from "@angular/core";
+import {Product, WineComSearchResult} from "../../services/wineCom.service";
+import {StockSandbox} from "../../stock.sandbox";
+import {FormControl} from "@angular/forms";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Component({
     selector: "wine-search",
@@ -32,24 +31,25 @@ export class WineSearchContainer implements OnChanges {
     control = new FormControl("");
 
     private showResults$ = new BehaviorSubject(true);
-    private foundWines$ = this.control.valueChanges
+
+    private clear$ = this.showResults$.filter(val => !val)
+        .map(() => []);
+
+    winesToShow$ = this.control.valueChanges
         .do((value: string) => this.showResults$.next(false)) // user types, hide the results
         .filter(value => value.length > 2)
         .debounceTime(300)
         .switchMap(value => this.sb.search(value))
         .map((res: WineComSearchResult) => res.products.list)
-        .do(() => this.showResults$.next(true)); // call is done, show results
-
-    winesToShow$ = Observable.combineLatest(this.showResults$, this.foundWines$,
-        (showResults: boolean, foundWines: Array<Product>) => {
-            return showResults ? foundWines : [];
-        })
-        .distinctUntilChanged(); // distinct the results
+        .merge(this.clear$)
+        .distinctUntilChanged();
 
     constructor(private sb: StockSandbox) {
     }
 
-    ngOnChanges(): void {
+
+    // FIXME: AOT issue if no param specified : https://github.com/angular/angular/issues/11062
+    ngOnChanges(changes: SimpleChanges): void {
         this.control.setValue(this.name, {emitEvent: false}); // don't call valuechanges again
     }
 

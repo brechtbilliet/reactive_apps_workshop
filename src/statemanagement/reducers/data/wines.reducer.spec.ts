@@ -17,7 +17,7 @@ describe("reducer > data", () => {
             expect(changedState[1]).toBe(wine);
         });
     });
-    describe("case DATA_WINES_SET_ALL", () => {
+    describe("case DATA_WINES_ADD_ALL", () => {
         it("should return a new instance with the correct state", () => {
             let initialState: Array<Wine> = [];
             let wines: Wine[] = [new Wine(), new Wine(), new Wine()];

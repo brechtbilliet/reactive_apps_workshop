@@ -57,11 +57,11 @@ export class DetailWineFormComponent implements OnInit {
     }
 
     setRate(rate: number): void {
-        this.wine.myRating = rate;
+        this.wine = {...this.wine, myRating: rate};
     }
 
     setInStock(inStock: number): void {
-        this.wine.inStock = inStock;
+        this.wine = {...this.wine, inStock};
     }
 
     onSelectWine(wine: Product): void {
@@ -71,6 +71,7 @@ export class DetailWineFormComponent implements OnInit {
             price: wine.priceRetail,
             region: wine.appellation ? wine.appellation.region.name : ""
         });
-        this.wine.image = wine.labels.length > 0 ? wine.labels[0].url : null;
+        let imageUrl = wine.labels.length > 0 ? wine.labels[0].url : null;
+        this.wine = {...this.wine, image: imageUrl};
     }
 }

@@ -27,39 +27,39 @@ function camelCaseReviver(key: string, value: any): any {
     return value;
 }
 
-export interface WineComSearchResult {
+export type WineComSearchResult = Readonly<{
     products: Products;
-}
-export interface Products {
-    list: Array<Product>;
-    offset: number;
-    total: number;
-}
-export interface Product {
-    name: string;
-    priceMax: number;
-    priceMin: number;
-    priceRetail: number;
-    ratings: Ratings;
-    labels: Array<Label>;
-    appellation: Appellation;
-    description: string;
-    id: number;
-    varietal: Varietal;
-}
-export interface Ratings {
-    highestScore: number;
-}
-export interface Label {
-    name: string;
-    url: string;
-}
-export interface Appellation {
-    region: Region;
-}
-export interface Region {
-    name: string;
-}
-export interface Varietal {
-    name: string;
-}
+}>;
+export type Products = Readonly<{
+     list: Array<Product>;
+     offset: number;
+     total: number;
+}>;
+export type Product = Readonly<{
+     name: string;
+     priceMax: number;
+     priceMin: number;
+     priceRetail: number;
+     ratings: Ratings;
+     labels: Array<Label>;
+     appellation: Appellation;
+     description: string;
+     id: number;
+     varietal: Varietal;
+}>;
+export type Ratings = Readonly<{
+     highestScore: number;
+}>;
+export type Label = Readonly<{
+     name: string;
+     url: string;
+}>;
+export type Appellation = Readonly<{
+     region: Region;
+}>;
+export type Region = Readonly<{
+     name: string;
+}>;
+export type Varietal = Readonly<{
+     name: string;
+}>;
