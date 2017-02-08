@@ -67,7 +67,7 @@ export class StockPageContainer implements OnDestroy {
 
     constructor(private stockService: StockService, private store: Store<ApplicationState>) {
         this.subscriptions.push(this.store.subscribe((state: ApplicationState) => {
-            this.favoriteWines = orderBy(state.data.wines.filter((wine: Wine) => wine.myRating > 3), ["myRating"], ["desc"]).slice(0, 5);
+            this.favoriteWines = orderBy(state.data.wines.filter((wine: Wine) => wine.myRating > 3), ["myRating"], ["desc"]).slice(0, 5) as Wine[];
         }));
     }
 
