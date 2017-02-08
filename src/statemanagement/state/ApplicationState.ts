@@ -1,6 +1,7 @@
 import {ContainersState} from "./ContainersState";
 import {DataState} from "./DataState";
-export interface ApplicationState {
+
+export type ApplicationState = Readonly<{
     containers: ContainersState;
     data: DataState;
-}
+}>;

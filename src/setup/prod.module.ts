@@ -1,8 +1,10 @@
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA, Component} from "@angular/core";
 import {AppModule} from "../app";
-import {StoreModule} from "@ngrx/store";
-import {rootReducer} from "../statemanagement/rootReducer";
+import {StoreModule, combineReducers} from "@ngrx/store";
 import {StoreUndoModule} from "ngrx-undo/index";
+import {reset} from "../statemanagement/metareducers/reset-reducer";
+import {compose} from "@ngrx/core";
+import {rootReducer} from "../statemanagement/rootReducer";
 
 @Component({
     selector: "application-wrapper",
@@ -13,8 +15,15 @@ import {StoreUndoModule} from "ngrx-undo/index";
 export class ApplicationWrapperContainer {
 }
 
+// Compose all our middleware with the rootReducer
+const composedReducer = compose(reset, combineReducers)(rootReducer);
+
+export function getComposedReducer(state: any, action: any) {
+    return composedReducer(state, action);
+}
+
 @NgModule({
-    imports: [StoreModule.provideStore(rootReducer), StoreUndoModule.interceptStore({
+    imports: [StoreModule.provideStore(getComposedReducer), StoreUndoModule.interceptStore({
         bufferSize: 200 // Set the size of the buffer (Default: 100)
     }), AppModule],
     declarations: [ApplicationWrapperContainer],
