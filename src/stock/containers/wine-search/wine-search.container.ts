@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges} from "@angular/core";
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, SimpleChanges} from "@angular/core";
 import { Product, WineComSearchResult, WineComService } from "../../services/wineCom.service";
 import {FormControl} from "@angular/forms";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
@@ -34,7 +34,7 @@ export class WineSearchContainer implements OnChanges {
     private clear$ = this.showResults$.filter(val => !val)
         .map(() => []);
 
-    private winesToShow$ = this.control.valueChanges
+    winesToShow$ = this.control.valueChanges
         .do((value: string) => this.showResults$.next(false)) // user types, hide the results
         .filter(value => value.length > 2)
         .debounceTime(300)
@@ -46,7 +46,7 @@ export class WineSearchContainer implements OnChanges {
     constructor(private wineComService: WineComService) {
     }
 
-    ngOnChanges(): void {
+    ngOnChanges(changes: SimpleChanges): void {
         this.control.setValue(this.name, {emitEvent: false}); // don't call valuechanges again
     }
 
